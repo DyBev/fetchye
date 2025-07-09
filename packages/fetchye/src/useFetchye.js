@@ -50,7 +50,10 @@ const useFetchye = (
       return;
     }
     const { loading, data, error } = selectorState.current;
-    if (!loading && !data && !error) {
+    if (
+      (!loading && !data && !error)
+      || (numOfRenders.current === 1 && options.forceInitialFetch === true)
+    ) {
       runAsync({
         dispatch, computedKey, fetcher: selectedFetcher, fetchClient, options,
       });
